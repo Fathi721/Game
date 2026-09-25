@@ -1,0 +1,117 @@
+class Enemy {
+    constructor(x, y, detectionRange) {
+        this.x = x;
+        this.y = y;
+        this.detectionRange = detectionRange;
+    }
+
+    // Menghitung jarak antara enemy dan player
+    getDistance(player) {
+        const dx = player.x - this.x;
+        const dy = player.y - this.y;
+
+        return Math.sqrt(dx * dx + dy * dy);
+    }
+
+    // Mengecek apakah player berada dalam jangkauan
+    isPlayerInRange(player) {
+        return this.getDistance(player) <= this.detectionRange;
+    }
+
+    // Mencari jalur menggunakan A*
+    findPath(start, target, dungeon) {
+        // Implementasi A* dapat menggunakan grid dungeon.
+        // Nilai return berupa daftar node yang harus dilewati enemy.
+
+        const path = aStar(start, target, dungeon);
+
+        return path;
+    }
+
+    // Enemy bergerak mengikuti path
+    moveAlongPath(path) {
+        if (path.length === 0) {
+            return;
+        }
+
+        const nextPosition = path[0];
+
+        this.x = nextPosition.x;
+        this.y = nextPosition.y;
+
+        console.log(
+            `Enemy bergerak ke (${this.x}, ${this.y})`
+        );
+    }
+
+    update(player, dungeon) {
+        // 1. Deteksi player
+        if (!this.isPlayerInRange(player)) {
+            console.log("Player berada di luar jangkauan.");
+            return;
+        }
+
+        console.log("Player terdeteksi!");
+
+        // 2. Cari jalur menggunakan A*
+        const start = {
+            x: this.x,
+            y: this.y
+        };
+
+        const target = {
+            x: player.x,
+            y: player.y
+        };
+
+        const path = this.findPath(start, target, dungeon);
+
+        // 3. Cek apakah jalur ditemukan
+        if (path.length === 0) {
+            console.log("Jalur menuju player tidak ditemukan.");
+            return;
+        }
+
+        // 4. Bergerak menuju player
+        this.moveAlongPath(path);
+    }
+}
+
+
+// Contoh fungsi A*
+function aStar(start, target, dungeon) {
+    /*
+        Algoritma A* menggunakan rumus:
+
+        f(n) = g(n) + h(n)
+
+        g(n) = biaya dari titik awal menuju node n
+        h(n) = estimasi jarak node n menuju target
+        f(n) = total perkiraan biaya
+
+        Implementasi lengkap A* bergantung pada struktur
+        grid dungeon dan obstacle yang digunakan.
+    */
+
+    // Contoh path sederhana
+    return [
+        { x: start.x + 1, y: start.y },
+        { x: start.x + 2, y: start.y },
+        { x: target.x, y: target.y }
+    ];
+}
+
+
+// Contoh penggunaan
+const enemy = new Enemy(2, 2, 10);
+
+const player = {
+    x: 7,
+    y: 5
+};
+
+const dungeon = {
+    // Data grid dungeon dan obstacle
+};
+
+enemy.update(player, dungeon);
