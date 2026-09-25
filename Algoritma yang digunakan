@@ -1,0 +1,21 @@
+Algoritma Enemy Mendeteksi dan Mengejar Player di Dungeon
+
+1. Identifikasi Algoritma
+
+Algoritma yang digunakan terdiri dari beberapa tahap:
+
+  1. Deteksi Player (Detection)
+     Enemy mengecek apakah player berada di area deteksi atau field of view.
+
+  2. Pengecekan Jangkauan (Range Check)
+     Jika player terdeteksi, enemy menghitung jarak antara enemy dan player. Jika jarak masih berada dalam jangkauan pengejaran, proses dilanjutkan.
+
+  3. Pathfinding A*
+     Enemy mencari jalur terpendek dari posisi enemy menuju posisi player menggunakan algoritma A* (A-Star). Algoritma ini cocok untuk dungeon yang memiliki dinding atau obstacle.
+
+  4. Movement
+     Enemy mengikuti node/path yang telah ditemukan sampai mendekati posisi player.
+
+  5. Loop
+     Posisi player dicek kembali secara berkala. Jika player bergerak, path dapat dihitung ulang.
+
